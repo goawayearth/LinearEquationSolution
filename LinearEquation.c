@@ -20,6 +20,7 @@ int main(){
 
         changeRow(0,1);
 
+        printf("转换之后：\n");
         showMatrix();
         
         
@@ -42,41 +43,43 @@ void inputInfo(){
         
     //开辟矩阵的存储空间
     for(int i=0;i<N;i++)
-        HEAD[i] = (double*)malloc((N+1)*sizeof(double));
+        *(HEAD+i) = (double*)malloc((N+1)*sizeof(double));
         
     printf("请输入方程组的增广矩阵:\n");
     for(int i=0;i<N;i++)
         for(int j=0;j<N+1;j++)
-            scanf("%lf",&HEAD[i][j]); // 增广矩阵输入完成
+            scanf("%lf",(*(HEAD+i)+j)); // 增广矩阵输入完成
 }
 
 // 输出矩阵
 void showMatrix(){
     for(int i=0;i<N;i++){
         for(int j=0;j<N+1;j++){
-            printf("%lf ",HEAD[i][j]);
+            printf("%lf ",*(*(HEAD+i)+j));
         }
         printf("\n");
     }
 }
 
+// 行变换之交换
 void changeRow(int row1,int row2){
-    double* tem = HEAD[row1];
-    HEAD[row1] = HEAD[row2];
-    HEAD[row2] = tem;
+    double* tem = *(HEAD+row1);
+    *(HEAD+row1) = *(HEAD+row2);
+    *(HEAD+row2) = tem;
 }
 
+// 化简矩阵
 void makeSimple(){
     int ptrCol = 0; // 列指针，初始化指向第一列
     for(int col = 0;col<N;col++){
-        if(HEAD[col][col] == 0){
+        if(*(*(HEAD+col)+col) == 0){
             // 主元素是0，行变化解决
             for(int row = col+1;row<N;row++){
-                if(HEAD[row][col]!=0){
+                if(*(*(HEAD+row)+col)!=0){
                     // 两行交换
                     changeRow(col,row);
                 }
-                if(row==N-1 && HEAD[row][col] == 0){
+                if(row==N-1 && *(*(HEAD+col)+col) == 0){
                     // 最后一行了还是0
                     printf("不是满秩矩阵");
                     return;
