@@ -2,25 +2,22 @@
 #include <stdlib.h>
 
 int N; // 实际用户输入的矩阵大小
-double** HEAD = NULL; // 用来指向N个double*的指针
+double** HEAD = NULL; // 用来指向N个double*的指针,原始矩阵的指针
+double** L = NULL; // L矩阵的指针
+double** U = NULL; // U矩阵的指针
+
 
 void inputInfo(); // 输入矩阵信息
 void showMatrix(); // 展示矩阵
 void makeSimple();// 化简矩阵
 void changeRow();
+void decomposeMatrix();
 
 
 
 int main(){
     while(1){
         inputInfo(); // 输入矩阵数据
-
-        
-        showMatrix(); // 展示矩阵
-
-        changeRow(0,1);
-
-        printf("转换之后：\n");
         showMatrix();
         
         
@@ -88,4 +85,9 @@ void makeSimple(){
         }
         // 主元更换完毕，可以化简
     }
+}
+
+// 将化简之后的矩阵分解为两个矩阵
+void decomposeMatrix(){
+
 }
