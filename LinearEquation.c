@@ -1,4 +1,6 @@
-
+/*
+增加错误检测
+*/
 #include "ColumnPivoting.h"
 
 int N; // 实际用户输入的矩阵大小
@@ -15,17 +17,11 @@ int main(){
     while(1){
         inputInfo(); // 输入矩阵数据
         printf("初识矩阵是：\n");
-        showMatrix(N,N+1,HEAD);        
+        showMatrix(N,N+1,HEAD);
         makeSimple(N,HEAD);
-        L = decomposeMatrix_L(N,HEAD);
-        U = decomposeMatrix_U(N,HEAD);
-        b = decomposeMatrix_b(N,HEAD);
-        printf("矩阵L:\n");
-        showMatrix(N,N,L);
-        printf("矩阵U:\n");
-        showMatrix(N,N,U);
+        printf("化简之后的矩阵是：\n");
+        showMatrix(N,N+1,HEAD);
 
-        
     }
 }
 

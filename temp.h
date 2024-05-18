@@ -4,15 +4,17 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-// 绝对值函数
-double abs_t(double a);
+
 
 // 化简矩阵
 void makeSimple(int N,double** HEAD);
 
 // 行变换
 void changeRow(int row1,int row2,double** HEAD);
-
+//分解为两个矩阵
+double** decomposeMatrix_L(int N,double** HEAD);
+double** decomposeMatrix_U(int N,double** HEAD);
+double* decomposeMatrix_b(int N,double** HEAD);
 //比较大小之前的计算
 void preCalculate(int N,double** HEAD,int col); 
     
@@ -28,8 +30,6 @@ void preCalculate(int N,double** HEAD,int col);
 // 换完主元之后的计算
 void nextCalculate(int N,double** HEAD,int col);
 
-// 检测矩阵类型
-int detectType(double** HEAD,int N);
 
 
 
