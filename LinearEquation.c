@@ -6,17 +6,25 @@ double** HEAD = NULL; // 用来指向N个double*的指针,原始矩阵的指针
 double** L = NULL; // L矩阵的指针
 double** U = NULL; // U矩阵的指针
 double* X = NULL; // 方程组的解
-
+double* b = NULL;
 
 void inputInfo(); // 输入矩阵信息
 void showMatrix(); // 展示矩阵
 
-
 int main(){
     while(1){
         inputInfo(); // 输入矩阵数据
-        detectType(double** HEAD,int N);
-        
+        printf("初识矩阵是：\n");
+        showMatrix(N,N+1,HEAD);        
+        makeSimple(N,HEAD);
+        L = decomposeMatrix_L(N,HEAD);
+        U = decomposeMatrix_U(N,HEAD);
+        b = decomposeMatrix_b(N,HEAD);
+        printf("矩阵L:\n");
+        showMatrix(N,N,L);
+        printf("矩阵U:\n");
+        showMatrix(N,N,U);
+
         
     }
 }
@@ -47,9 +55,9 @@ void inputInfo(){
 }
 
 // 输出矩阵
-void showMatrix(){
-    for(int i=0;i<N;i++){
-        for(int j=0;j<N+1;j++){
+void showMatrix(int row,int col,double** HEAD){
+    for(int i=0;i<row;i++){
+        for(int j=0;j<col;j++){
             printf("%lf ",*(*(HEAD+i)+j));
         }
         printf("\n");
