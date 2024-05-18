@@ -1,5 +1,10 @@
-
+/*
+LU分解成功
+没有类型判断
+没有计算x,y
+*/
 #include "ColumnPivoting.h"
+#include "LUdecomposition.h"
 #include <unistd.h>
 
 int N; // 实际用户输入的矩阵大小
@@ -15,14 +20,39 @@ void showMatrix(); // 展示矩阵
 void pauseBeforeExit();
 void columnPivot();
 void clearInputBuffer();
+int get_choice();
+void LUdecomp();
 
 int main(){
     while(1){
         inputInfo(); // 输入矩阵数据
         printf("初始矩阵是：\n");
         showMatrix(N,N+1,HEAD);
-        columnPivot();
+        printf("选择求解的方法：1.列主元素消去法  2.列主元素LU分解法：");
+        int choice = get_choice();
+        switch(choice){
+            case 1: columnPivot();break;
+            case 2: LUdecomp();break;
+        }
     }
+}
+
+
+void LUdecomp(){
+    lu_makeSimple(N,HEAD);
+    L = decomposeMatrix_L(N,HEAD);
+    U = decomposeMatrix_U(N,HEAD);
+    b = decomposeMatrix_b(N,HEAD);
+    printf("分解之后的L:\n");
+    showMatrix(N,N,L);
+    printf("分解之后的U:\n");
+    showMatrix(N,N,U);
+    printf("b为：\n");
+    for(int i=0;i<N;i++)
+        printf("%lf ",*(b+i));
+    printf("\n");
+
+
 }
 
 
@@ -43,6 +73,17 @@ void columnPivot(){
     }
 }
 
+int get_choice(){
+    while(1){
+        int num;
+        if(scanf("%d",&num) != 1){
+            printf("输入错误！请重新输入：");
+        }
+        else{
+            return num;
+        }
+    }
+}
 
 void inputInfo(){
     int flag = 0;
@@ -106,6 +147,7 @@ void inputInfo(){
             }
             if(f == 1)break;
         }
+        flag = 1;
     }
     
 }
@@ -121,7 +163,7 @@ void showMatrix(int row,int col,double** HEAD){
 }
 
 void pauseBeforeExit() {
-    sleep(2);
+    sleep(1);
 }
 
 void clearInputBuffer() {
