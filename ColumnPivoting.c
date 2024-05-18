@@ -49,5 +49,21 @@ void makeSimple(int N,double** HEAD){
 }
 
 int detectType(double** HEAD,int N){ // 1：有唯一解 2：没有解 3：有无穷多解
+    // 输入的是化简之后的矩阵
+    if(*(*(HEAD+N-1)+N-1) == 0){
+        if(*(*(HEAD+N-1)+N) == 0) return 3;
+            else return 2;
+    }
+    else return 1;
+}
+
+double* getFinalRes(double** HEAD,int N){
+    double *b = (double*)malloc(N * sizeof(double));
+    for(int row = N-1;row >= 0;row--){
+        for(int p = row+1;p<N;p++)
+            *(*(HEAD+row)+N) -= *(b+p) * (*(*(HEAD+row)+p));
+        *(b+row) = *(*(HEAD+row)+N) / (*(*(HEAD+row)+row));
+    }
+    return b;
 
 }

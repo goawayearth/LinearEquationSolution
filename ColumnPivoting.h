@@ -31,6 +31,9 @@ void nextCalculate(int N,double** HEAD,int col);
 // 检测矩阵类型
 int detectType(double** HEAD,int N);
 
+// 得出方程组的解
+double* getFinalRes(double** HEAD,int N);
+
 
 
 
