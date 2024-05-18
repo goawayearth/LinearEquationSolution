@@ -50,8 +50,8 @@ void makeSimple(int N,double** HEAD){
 
 int detectType(double** HEAD,int N){ // 1：有唯一解 2：没有解 3：有无穷多解
     // 输入的是化简之后的矩阵
-    if(*(*(HEAD+N-1)+N-1) == 0){
-        if(*(*(HEAD+N-1)+N) == 0) return 3;
+    if(*(*(HEAD+N-1)+N-1) < 0.000001){
+        if(abs_t(*(*(HEAD+N-1)+N)) < 0.000001) return 3;
             else return 2;
     }
     else return 1;
