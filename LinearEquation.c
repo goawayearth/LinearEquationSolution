@@ -154,6 +154,7 @@ void inputInfo(){
             }
             if(f == 1)break;
         }
+        if(f==1) continue;
         flag = 1;
     }
     
