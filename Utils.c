@@ -24,3 +24,24 @@ double* upperTriangularMatrix(double** U,double* b,int N){
     }
     return X;
 }
+
+// 行变换之交换
+void changeRow(int row1,int row2,double** HEAD){
+    double* tem = *(HEAD+row1);
+    *(HEAD+row1) = *(HEAD+row2);
+    *(HEAD+row2) = tem;
+}
+
+double abs_t(double a){
+    if(a<0) return -a;
+    return a;
+}
+
+int needExchange(int N,double** HEAD,int col){// 寻找这个矩阵的col列的主元素的那一行
+    int max = col;
+    for(int row = col+1;row<N;row++){
+        if(abs_t(*(*(HEAD+row)+col)) > abs_t(*(*(HEAD+max)+col)))
+            max = row;
+    }
+    return max;
+}

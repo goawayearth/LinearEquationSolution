@@ -97,7 +97,7 @@ double* lu_getFinalRes(double** L,double** U,double* b,int N){
     double* y = lowerTriangularMatrix(L,b,N);
     printf("y的值是：\n");
     for(int i = 0;i < N;i++){
-        printf("%lf",*(y+i));
+        printf("%lf ",*(y+i));
     }
     printf("\n");
     free(y);
