@@ -1,16 +1,29 @@
 
 #include "ColumnPivoting.h"
 
+#include <omp.h>
 
 
-void nextCalculate(int N,double** HEAD,int col){
-    // 换完主元之后，需要将主元下面的数据变为0
-    for(int row = col+1;row<N;row++){
-        double k = (*(*(HEAD+row)+col)) / (*(*(HEAD+col)+col));
-        for(int col1 = 0;col1<N+1;col1++)
-            *(*(HEAD+row)+col1) -= k * (*(*(HEAD+col)+col1)); 
+void nextCalculate(int N, double** HEAD, int col) {
+    // Parallelize the outer loop using OpenMP
+    #pragma omp parallel for shared(HEAD, N, col) default(none)
+    for (int row = col + 1; row < N; row++) {
+        double k = HEAD[row][col] / HEAD[col][col];
+        for (int col1 = 0; col1 < N + 1; col1++) {
+            HEAD[row][col1] -= k * HEAD[col][col1];
+        }
     }
 }
+
+
+// void nextCalculate(int N,double** HEAD,int col){
+//     // 换完主元之后，需要将主元下面的数据变为0
+//     for(int row = col+1;row<N;row++){
+//         double k = (*(*(HEAD+row)+col)) / (*(*(HEAD+col)+col));
+//         for(int col1 = 0;col1<N+1;col1++)
+//             *(*(HEAD+row)+col1) -= k * (*(*(HEAD+col)+col1)); 
+//     }
+// }
 
 
 // 化简矩阵

@@ -81,17 +81,33 @@ void lu_preCalculate(int N,double** HEAD,int col){ // 比较大小之前的计�
     }
 }
 
-void lu_nextCalculate(int N,double** HEAD,int col){
-    // 换完主元之后，列做除法，行做减法
-    if(col == N-1) return; // 最后一行不需要处理
-    for(int row = col+1;row<N;row++)
-        *(*(HEAD+row)+col) /= (*(*(HEAD+col)+col));
-    // 计算行元素
-    for(int col1 = col+1;col1<N;col1++)
-        for(int p = 0;p < col;p++)
-            *(*(HEAD+col)+col1) -= (*(*(HEAD+p)+col1)) * (*(*(HEAD+col)+p));
 
+void lu_nextCalculate(int N, double** HEAD, int col) {
+    // 换完主元之后，列做除法，行做减法
+    if (col == N - 1) return; // 最后一行不需要处理
+
+    #pragma omp parallel for
+    for (int row = col + 1; row < N; row++)
+        *(*(HEAD + row) + col) /= (*(*(HEAD + col) + col));
+
+    // 计算行元素
+    for (int col1 = col + 1; col1 < N; col1++)
+        for (int p = 0; p < col; p++)
+            *(*(HEAD + col) + col1) -= (*(*(HEAD + p) + col1)) * (*(*(HEAD + col) + p));
 }
+
+
+// void lu_nextCalculate(int N,double** HEAD,int col){
+//     // 换完主元之后，列做除法，行做减法
+//     if(col == N-1) return; // 最后一行不需要处理
+//     for(int row = col+1;row<N;row++)
+//         *(*(HEAD+row)+col) /= (*(*(HEAD+col)+col));
+//     // 计算行元素
+//     for(int col1 = col+1;col1<N;col1++)
+//         for(int p = 0;p < col;p++)
+//             *(*(HEAD+col)+col1) -= (*(*(HEAD+p)+col1)) * (*(*(HEAD+col)+p));
+
+// }
 
 double* lu_getFinalRes(double** L,double** U,double* b,int N){
     double* y = lowerTriangularMatrix(L,b,N);
