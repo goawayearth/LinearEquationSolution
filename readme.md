@@ -1,6 +1,7 @@
 # 求解线性方程组  Solving Linear Equations
 
 ## 选取方法：
+- Gauss 消去法
 - 按列选取主元素消去法，能够有效避免系统误差
 - 列主元素LU分解法
 - 欢迎补充
@@ -16,6 +17,7 @@
 ---
 
 ## Methods
+- Gaussian Elimination
 - Select main elements by columns and eliminate to effectively avoid system errors
 - Column-pivoted LU decomposition
 - Additional methods welcome

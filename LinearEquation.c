@@ -2,6 +2,7 @@
 #include "ColumnPivoting.h"
 #include "LUdecomposition.h"
 #include <unistd.h>
+#include "GaussianElimination.h"
 
 int N; // 实际用户输入的矩阵大小
 double** HEAD = NULL; // 用来指向N个double*的指针,原始矩阵的指针
@@ -18,17 +19,20 @@ void columnPivot();
 void clearInputBuffer();
 int get_choice();
 void LUdecomp();
+void GaussianEliminat();
 
 int main(){
     while(1){
         inputInfo(); // 输入矩阵数据
         printf("初始矩阵是：\n");
         showMatrix(N,N+1,HEAD);
-        printf("选择求解的方法：1.列主元素消去法  2.列主元素LU分解法：");
+        printf("选择求解的方法：1.Gauss消去法 2.列主元素消去法 3.列主元素LU分解法：");
         int choice = get_choice();
         switch(choice){
-            case 1: columnPivot();break;
-            case 2: LUdecomp();break;
+            case 1: GaussianEliminat();break;
+            case 2: columnPivot();break;
+            case 3: LUdecomp();break;
+            default: GaussianEliminat();break;
         }
         printf("\n------------------------------------------\n");
     }
@@ -64,6 +68,24 @@ void LUdecomp(){
 
 void columnPivot(){
     makeSimple(N,HEAD);
+    printf("化简之后的矩阵是：\n");
+    showMatrix(N,N+1,HEAD);
+    int type = detectType(HEAD,N);
+    if(type == 2) printf("该方程组没有解！！！\n");
+    else if(type == 3) printf("该方程组有无穷多解！！！\n");
+    else{ // 有唯一解
+        printf("该矩阵有唯一解！！！\n");
+        X = getFinalRes(HEAD,N);
+        printf("矩阵的解是：\n");
+        for(int i=0;i<N;i++){
+            printf("X%d=%lf ",i+1,*(X+i));
+        }
+        printf("\n");
+    }
+}
+
+void GaussianEliminat(){
+    g_makeSimple(N,HEAD);
     printf("化简之后的矩阵是：\n");
     showMatrix(N,N+1,HEAD);
     int type = detectType(HEAD,N);
