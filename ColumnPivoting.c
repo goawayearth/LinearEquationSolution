@@ -58,12 +58,11 @@ int detectType(double** HEAD,int N){ // 1：有唯一解 2：没有解 3：有�
 }
 
 double* getFinalRes(double** HEAD,int N){
-    double *b = (double*)malloc(N * sizeof(double));
+    double *X = (double*)malloc(N * sizeof(double));
     for(int row = N-1;row >= 0;row--){
         for(int p = row+1;p<N;p++)
-            *(*(HEAD+row)+N) -= *(b+p) * (*(*(HEAD+row)+p));
-        *(b+row) = *(*(HEAD+row)+N) / (*(*(HEAD+row)+row));
+            *(*(HEAD+row)+N) -= *(X+p) * (*(*(HEAD+row)+p));
+        *(X+row) = *(*(HEAD+row)+N) / (*(*(HEAD+row)+row));
     }
-    return b;
-
+    return X;
 }

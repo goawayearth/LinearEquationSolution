@@ -1,8 +1,4 @@
-/*
-LU分解成功
-没有类型判断
-没有计算x,y
-*/
+
 #include "ColumnPivoting.h"
 #include "LUdecomposition.h"
 #include <unistd.h>
@@ -34,12 +30,17 @@ int main(){
             case 1: columnPivot();break;
             case 2: LUdecomp();break;
         }
+        printf("\n------------------------------------------\n");
     }
 }
 
 
 void LUdecomp(){
-    lu_makeSimple(N,HEAD);
+    if(lu_makeSimple(N,HEAD)){
+        // 是奇异矩阵
+        printf("该矩阵是奇异矩阵，无法使用LU分解法！\n");
+        return;
+    }
     L = decomposeMatrix_L(N,HEAD);
     U = decomposeMatrix_U(N,HEAD);
     b = decomposeMatrix_b(N,HEAD);
@@ -52,7 +53,12 @@ void LUdecomp(){
         printf("%lf ",*(b+i));
     printf("\n");
 
-
+    X = lu_getFinalRes(L,U,b,N);
+    printf("矩阵的解是：\n");
+    for(int i=0;i<N;i++){
+        printf("X%d=%lf ",i+1,*(X+i));
+    }
+    printf("\n");
 }
 
 
@@ -65,9 +71,10 @@ void columnPivot(){
     else if(type == 3) printf("该方程组有无穷多解！！！\n");
     else{ // 有唯一解
         printf("该矩阵有唯一解！！！\n");
-        b = getFinalRes(HEAD,N);
+        X = getFinalRes(HEAD,N);
+        printf("矩阵的解是：\n");
         for(int i=0;i<N;i++){
-            printf("%lf ",*(b+i));
+            printf("X%d=%lf ",i+1,*(X+i));
         }
         printf("\n");
     }

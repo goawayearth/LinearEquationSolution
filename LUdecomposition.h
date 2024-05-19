@@ -7,7 +7,7 @@
 
 
 // 化简矩阵
-void lu_makeSimple(int N,double** HEAD);
+int lu_makeSimple(int N,double** HEAD);
 
 
 //分解为两个矩阵
@@ -29,6 +29,7 @@ void lu_preCalculate(int N,double** HEAD,int col);
 // 换完主元之后的计算
 void lu_nextCalculate(int N,double** HEAD,int col);
 
+double* lu_getFinalRes(double** L,double** U,double* b,int N);
 
 
 

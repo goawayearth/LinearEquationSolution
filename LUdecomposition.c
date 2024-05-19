@@ -1,15 +1,17 @@
 
 #include "LUdecomposition.h"
 #include "ColumnPivoting.h"
-
+#include "Utils.h"
 
 // 化简矩阵
-void lu_makeSimple(int N,double** HEAD){
+int lu_makeSimple(int N,double** HEAD){ // 1是奇异矩阵，0不是奇异矩阵
     for(int col = 0;col<N;col++){
         /* 先进行计算 */
         lu_preCalculate(N,HEAD,col);
         
         int max = needExchange(N,HEAD,col);
+
+        if(abs_t(*(*(HEAD+max)+col)) < 0.00001) return 1; // 是奇异矩阵
 
         if(max != col){
             // 需要进行行变换
@@ -18,6 +20,7 @@ void lu_makeSimple(int N,double** HEAD){
         /* 行变换之后的计算 */
         lu_nextCalculate(N,HEAD,col);
     }
+    return 0;
 }
 
 // 将化简之后的矩阵分解为两个矩阵
@@ -88,4 +91,16 @@ void lu_nextCalculate(int N,double** HEAD,int col){
         for(int p = 0;p < col;p++)
             *(*(HEAD+col)+col1) -= (*(*(HEAD+p)+col1)) * (*(*(HEAD+col)+p));
 
+}
+
+double* lu_getFinalRes(double** L,double** U,double* b,int N){
+    double* y = lowerTriangularMatrix(L,b,N);
+    printf("y的值是：\n");
+    for(int i = 0;i < N;i++){
+        printf("%lf",*(y+i));
+    }
+    printf("\n");
+    free(y);
+    y = upperTriangularMatrix(U,y,N);
+    return y;
 }
