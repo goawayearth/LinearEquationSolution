@@ -10,6 +10,8 @@
 - LUdecomposition  列主元素LU矩阵分解
 - ColumnPivoting  列主元素消除法
 
+## 计算优化：OpenMP
+
 
 ---
 
@@ -22,3 +24,5 @@
 - Utils: General utility functions
 - LUdecomposition: Column-pivoted LU matrix decomposition
 - ColumnPivoting: Column-pivoted elimination method
+
+## Computational Optimization: OpenMP
