@@ -13,6 +13,8 @@
 
 ## 计算优化：OpenMP
 
+## 计算结果的误差应该被考虑
+
 
 ---
 
@@ -28,3 +30,5 @@
 - ColumnPivoting: Column-pivoted elimination method
 
 ## Computational Optimization: OpenMP
+
+## Errors in the calculation results should be considered.
