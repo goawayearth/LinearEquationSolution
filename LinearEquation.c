@@ -163,7 +163,7 @@ void inputInfo(){
             }
         }
 
-        printf("请输入方程组的增广矩阵:\n");
+        printf("请输入方程组的增广矩阵(数字之间由空格分开):\n");
         int f = 0;
         for (int i = 0; i < N; i++) {
             for (int j = 0; j < N + 1; j++) {

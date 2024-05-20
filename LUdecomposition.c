@@ -11,7 +11,7 @@ int lu_makeSimple(int N,double** HEAD){ // 1是奇异矩阵，0不是奇异矩�
         
         int max = needExchange(N,HEAD,col);
 
-        if(abs_t(*(*(HEAD+max)+col)) < 0.00001) return 1; // 是奇异矩阵
+        if(abs_t(*(*(HEAD+max)+col)) == 0) return 1; // 是奇异矩阵
 
         if(max != col){
             // 需要进行行变换
